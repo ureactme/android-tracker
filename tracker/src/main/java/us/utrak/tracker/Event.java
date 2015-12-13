@@ -1,5 +1,9 @@
 package us.utrak.tracker;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 /**
@@ -41,5 +45,13 @@ public class Event {
 
     public HashMap<String, String> getTags() {
         return this.tags;
+    }
+
+    public JSONObject toJSON() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put("metric", this.getMetric());
+        json.put("value", this.getValue());
+        json.put("metadata", new JSONObject(this.getTags()));
+        return json;
     }
 }

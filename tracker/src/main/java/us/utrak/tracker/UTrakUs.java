@@ -8,6 +8,7 @@ import java.util.HashMap;
  * Created by pappacena on 12/12/15.
  */
 public class UTrakUs {
+    public final static String BASE_URL = "http://bla.com";
     private Context context;
     private static HashMap<Context, UTrakUs> instances = new HashMap<Context, UTrakUs>();
 

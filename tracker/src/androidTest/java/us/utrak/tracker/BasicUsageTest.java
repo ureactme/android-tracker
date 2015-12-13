@@ -2,6 +2,9 @@ package us.utrak.tracker;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
+import android.util.Log;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -33,5 +36,39 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
         assertEquals(tags.size(), 2);
         assertEquals(tags.get("SO:Name"), "Android");
         assertEquals(tags.get("SO:Version"), "5.1");
+    }
+
+    final public void testJsonifyEvent() throws Exception {
+        Event e = new Event()
+                .setMetric("redbutton_click")
+                .setValue(1)
+                .addTag("SO:Name", "Android")
+                .addTag("SO:Version", "5.1");
+        JSONObject json = e.toJSON();
+        assertEquals(json.length(), 3);
+        assertEquals(json.get("metric"), "redbutton_click");
+        assertEquals(json.get("value"), 1.0);
+
+        assertEquals(json.getJSONObject("metadata").length(), 2);
+        assertEquals(json.getJSONObject("metadata").get("SO:Name"), "Android");
+        assertEquals(json.getJSONObject("metadata").get("SO:Version"), "5.1");
+    }
+
+    final public void testJsonifyEventFromTracker() throws Exception {
+        Event e = new Event()
+                .setMetric("redbutton_click")
+                .setValue(1)
+                .addTag("SO:Name", "Android")
+                .addTag("SO:Version", "5.1");
+        UTracker tracker = UTrakUs.getInstance(getApplication()).getTracker("token1", "user1");
+        JSONObject json = tracker.toJSON(e);
+        assertEquals(json.length(), 3);
+        assertEquals(json.get("metric"), "redbutton_click");
+        assertEquals(json.get("value"), 1.0);
+
+        assertEquals(json.getJSONObject("metadata").length(), 3);
+        assertEquals(json.getJSONObject("metadata").get("SO:Name"), "Android");
+        assertEquals(json.getJSONObject("metadata").get("SO:Version"), "5.1");
+        assertEquals(json.getJSONObject("metadata").get("user"), "user1");
     }
 }

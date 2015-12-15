@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import us.utrak.tracker.exceptions.InvalidTagName;
+
 /**
  * Created by pappacena on 13/12/15.
  */
@@ -35,7 +37,10 @@ public class Event {
         return this;
     }
 
-    public Event addMetadata(String tag, String value) {
+    public Event addMetadata(String tag, String value) throws InvalidTagName {
+        if(tag.equals("userid")) {
+            throw new InvalidTagName("userid tagname is reserved and cannot be used");
+        }
         this.tags.put(tag, value);
         return this;
     }

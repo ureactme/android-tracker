@@ -70,7 +70,7 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
         assertEquals(json.getJSONObject("metadata").length(), 3);
         assertEquals(json.getJSONObject("metadata").get("SO:Name"), "Android");
         assertEquals(json.getJSONObject("metadata").get("SO:Version"), "5.1");
-        assertEquals(json.getJSONObject("metadata").get("user"), "user1");
+        assertEquals(json.getJSONObject("metadata").get("userid"), "user1");
     }
 
     final public void testSendEvent() throws Exception {

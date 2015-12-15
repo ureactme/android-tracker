@@ -42,7 +42,7 @@ public class UTracker {
 
     public JSONObject toJSON(Event event) throws JSONException {
         JSONObject json = event.toJSON();
-        json.getJSONObject("metadata").put("user", this.getUser());
+        json.getJSONObject("metadata").put("userid", this.getUser());
         return json;
     }
 }

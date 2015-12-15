@@ -6,6 +6,7 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -33,29 +34,10 @@ public class UTracker {
         return this.user;
     }
 
-    public void send(Event event) {
-        try {
-            JSONObject json = this.toJSON(event);
-
-            URL url = new URL(UTrakUs.BASE_URL);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            connection.setAllowUserInteraction(false);
-            connection.setUseCaches(false);
-            // connection.setConnectTimeout(TIMEOUT_CONNECT_MILLIS);
-            // connection.setReadTimeout(TIMEOUT_READ_MILLIS);
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Accept-Charset", "utf-8");
-            connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
-            connection.setRequestProperty("Content-Length", ""+json.toString().getBytes("UTF8").length);
-
-            OutputStream os = connection.getOutputStream();
-            os.write(json.toString().getBytes());
-            os.close();
-        } catch(IOException|JSONException e) {
-            Log.e("utrak.us", "Connection problem: " + e.getMessage());
-        }
+    public void send(Event event) throws Exception {
+        EventSender sender = new EventSender(this);
+        sender.execute(event);
+        sender.get();
     }
 
     public JSONObject toJSON(Event event) throws JSONException {

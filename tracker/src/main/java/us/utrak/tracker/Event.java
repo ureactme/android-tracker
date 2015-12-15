@@ -1,9 +1,12 @@
 package us.utrak.tracker;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -12,12 +15,14 @@ import java.util.HashMap;
 public class Event {
     private String metric;
     private double value;
+    private Date date;
     private HashMap<String, String> tags;
 
     public Event() {
         this.metric = "";
         this.value = 0;
         this.tags = new HashMap<String, String>();
+        this.date = new Date();
     }
 
     public Event setMetric(String metric) {
@@ -30,7 +35,7 @@ public class Event {
         return this;
     }
 
-    public Event addTag(String tag, String value) {
+    public Event addMetadata(String tag, String value) {
         this.tags.put(tag, value);
         return this;
     }
@@ -43,15 +48,17 @@ public class Event {
         return this.value;
     }
 
-    public HashMap<String, String> getTags() {
+    public HashMap<String, String> addMetadata() {
         return this.tags;
     }
 
     public JSONObject toJSON() throws JSONException {
         JSONObject json = new JSONObject();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
+        json.put("date", df.format(this.date));
         json.put("metric", this.getMetric());
         json.put("value", this.getValue());
-        json.put("metadata", new JSONObject(this.getTags()));
+        json.put("metadata", new JSONObject(this.addMetadata()));
         return json;
     }
 }

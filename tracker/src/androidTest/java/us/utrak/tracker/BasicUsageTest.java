@@ -21,7 +21,7 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
         assertEquals(tracker.getUser(), "user1");
     }
 
-    final public void testCreateEvent() {
+    final public void testCreateEvent() throws Exception {
         Event e = new Event()
                 .setMetric("redbutton_click")
                 .setValue(1)

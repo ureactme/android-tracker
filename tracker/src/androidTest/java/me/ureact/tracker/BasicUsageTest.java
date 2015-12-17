@@ -1,4 +1,4 @@
-package us.utrak.tracker;
+package me.ureact.tracker;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
@@ -6,6 +6,10 @@ import android.test.ApplicationTestCase;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+
+import me.ureact.traker.Event;
+import me.ureact.traker.UTracker;
+import me.ureact.traker.UTrakUs;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>

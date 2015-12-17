@@ -1,15 +1,14 @@
-package us.utrak.tracker;
+package me.ureact.traker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-import us.utrak.tracker.exceptions.InvalidTagName;
+import me.ureact.traker.exceptions.InvalidTagName;
 
 /**
  * Created by pappacena on 13/12/15.

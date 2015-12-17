@@ -1,16 +1,9 @@
-package us.utrak.tracker;
+package me.ureact.traker;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 /**
  * Created by pappacena on 13/12/15.

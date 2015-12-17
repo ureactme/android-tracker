@@ -6,7 +6,7 @@ ext {
 
     publishedGroupId = 'me.ureact.tracker'
     libraryName = 'UReact.me-Tracker'
-    artifact = 'ureactme-tracker'
+    artifact = 'tracker'
 
     libraryDescription = 'Library to connect Android projects with ureact.me service'
 
@@ -32,7 +32,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
     }
     buildTypes {
         release {

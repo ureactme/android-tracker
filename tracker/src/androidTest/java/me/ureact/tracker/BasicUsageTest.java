@@ -7,10 +7,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-import me.ureact.traker.Event;
-import me.ureact.traker.UTracker;
-import me.ureact.traker.UTrakUs;
-
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
@@ -20,7 +16,7 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
     }
 
     final public void testInitializeUTracker() throws Exception {
-        UTracker tracker = UTrakUs.getInstance(getApplication()).getTracker("token1", "user1");
+        UTracker tracker = UReactMe.getInstance(getApplication()).getTracker("token1", "user1");
         assertEquals(tracker.getToken(), "token1");
         assertEquals(tracker.getUser(), "user1");
     }
@@ -64,7 +60,7 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
                 .setValue(1)
                 .addMetadata("SO:Name", "Android")
                 .addMetadata("SO:Version", "5.1");
-        UTracker tracker = UTrakUs.getInstance(getApplication()).getTracker("token1", "user1");
+        UTracker tracker = UReactMe.getInstance(getApplication()).getTracker("token1", "user1");
         JSONObject json = tracker.toJSON(e);
         assertEquals(json.length(), 4);
         assertTrue(json.has("date"));
@@ -78,8 +74,8 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
     }
 
     final public void testSendEvent() throws Exception {
-        UTrakUs uTrakUs = UTrakUs.getInstance(getApplication());
-        UTracker tracker = uTrakUs.getTracker("b5165f8b05c7d7df472d0065c849d0ddcfe74dd0", "user1");
+        UReactMe uReactMe = UReactMe.getInstance(getApplication());
+        UTracker tracker = uReactMe.getTracker("b5165f8b05c7d7df472d0065c849d0ddcfe74dd0", "user1");
         tracker.send(new Event()
                 .setMetric("redbutton_click")
                 .setValue(1)

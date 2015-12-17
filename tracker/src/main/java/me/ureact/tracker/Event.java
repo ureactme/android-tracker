@@ -1,4 +1,4 @@
-package me.ureact.traker;
+package me.ureact.tracker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-import me.ureact.traker.exceptions.InvalidTagName;
+import me.ureact.tracker.exceptions.InvalidTagName;
 
 /**
  * Created by pappacena on 13/12/15.

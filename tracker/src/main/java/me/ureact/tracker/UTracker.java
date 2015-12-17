@@ -1,4 +1,4 @@
-package me.ureact.traker;
+package me.ureact.tracker;
 
 import android.content.Context;
 

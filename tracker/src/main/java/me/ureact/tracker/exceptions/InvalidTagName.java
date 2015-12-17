@@ -1,4 +1,4 @@
-package me.ureact.traker.exceptions;
+package me.ureact.tracker.exceptions;
 
 /**
  * Created by pappacena on 15/12/15.

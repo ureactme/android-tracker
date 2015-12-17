@@ -1,4 +1,4 @@
-package me.ureact.traker;
+package me.ureact.tracker;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -39,7 +39,7 @@ public class EventSender extends AsyncTask<Event, Event, Void> {
             JSONObject json = this.tracker.toJSON(event);
             String payload = json.toString();
 
-            URL url = new URL(UTrakUs.BASE_URL + "/metricapi/metric/");
+            URL url = new URL(UReactMe.BASE_URL + "/metricapi/metric/");
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.setDoOutput(true);

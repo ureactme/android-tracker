@@ -21,7 +21,7 @@ public class Event {
 
     public Event() {
         this.metric = "";
-        this.value = 0;
+        this.value = 1;
         this.tags = new HashMap<String, String>();
         this.date = new Date();
     }

@@ -1,6 +1,7 @@
 package me.ureact.tracker;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,10 +28,14 @@ public class UTracker {
         return this.user;
     }
 
-    public void send(Event event) throws Exception {
-        EventSender sender = new EventSender(this);
-        sender.execute(event);
-        sender.get();
+    public void send(Event event) {
+        try {
+            EventSender sender = new EventSender(this);
+            sender.execute(event);
+            sender.get();
+        } catch(Exception e) {
+            Log.e("ureact.me", "Error sending event: " + e.getMessage());
+        }
     }
 
     public JSONObject toJSON(Event event) throws JSONException {

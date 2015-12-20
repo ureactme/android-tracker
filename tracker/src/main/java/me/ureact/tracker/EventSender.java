@@ -55,7 +55,7 @@ public class EventSender extends AsyncTask<Event, Event, Void> {
             connection.setFixedLengthStreamingMode(payload.getBytes().length);
 
             connection.connect();
-            Log.d("utrak.us", "Sending " + payload);
+            Log.d("ureact.me", "Sending " + payload);
             DataOutputStream printout = new DataOutputStream(connection.getOutputStream());
             printout.write(payload.toString().getBytes("UTF-8"));
             printout.flush();
@@ -69,9 +69,9 @@ public class EventSender extends AsyncTask<Event, Event, Void> {
             }
             br.close();
 
-            Log.d("utrak.us", "Got response code " + connection.getResponseCode() + "\n" + responseText);
+            Log.d("ureact.me", "Got response code " + connection.getResponseCode() + " - " + responseText);
         } catch (IOException | JSONException e) {
-            Log.e("utrak.us", "Connection problem: " + e.getMessage());
+            Log.e("ureact.me", "Connection problem: " + e.getMessage());
         } finally {
             if (connection != null) {
                 connection.disconnect();

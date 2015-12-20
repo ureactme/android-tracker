@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="us.utrak.tracker">
+    package="me.ureact.tracker.example">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,7 +12,6 @@
 
         <activity
             android:name=".BasicActivity"
-            android:exported="true"
             android:label="Test activity"
             android:launchMode="singleInstance">
             <intent-filter>

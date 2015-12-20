@@ -8,7 +8,7 @@ import java.util.HashMap;
  * Created by pappacena on 12/12/15.
  */
 public class UReactMe {
-    public final static String BASE_URL = "http://192.168.1.5:8080";
+    public final static String BASE_URL = "http://192.168.1.4:8080";
     private Context context;
     private static HashMap<Context, UReactMe> instances = new HashMap<Context, UReactMe>();
 

@@ -39,7 +39,7 @@ public class EventSender extends AsyncTask<Event, Event, Void> {
             JSONObject json = this.tracker.toJSON(event);
             String payload = json.toString();
 
-            URL url = new URL(UReactMe.BASE_URL + "/metricapi/metric/");
+            URL url = new URL(UReactMe.BASE_URL + "/api/v1/metric/");
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.setDoOutput(true);

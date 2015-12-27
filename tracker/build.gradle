@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/nuuneoi/FBLikeAndroid'
     gitUrl = 'https://github.com/nuuneoi/FBLikeAndroid.git'
 
-    libraryVersion = '0.0.6'
+    libraryVersion = '0.0.7'
 
     developerId = 'ureactme'
     developerName = 'Thiago Pappacena'

@@ -2,6 +2,7 @@ package me.ureact.tracker;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
+import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -18,7 +19,17 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
     final public void testInitializeUTracker() throws Exception {
         UTracker tracker = UReactMe.getInstance(getApplication()).getTracker("token1", "user1");
         assertEquals(tracker.getToken(), "token1");
-        assertEquals(tracker.getUser(), "user1");
+        assertEquals(tracker.getUser().getId(), "user1");
+    }
+
+    final public void testInitializeUTrackerWithUserObject() throws Exception {
+        User u = new User("userid1")
+                .setEmail("bla@foo.com")
+                .setPushNotificationId("devid");
+        UTracker tracker = UReactMe.getInstance(getApplication()).getTracker("token1", u);
+
+        assertEquals(tracker.getUser(), u);
+        assertEquals(tracker.getToken(), "token1");
     }
 
     final public void testCreateEvent() throws Exception {
@@ -31,7 +42,7 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
         assertEquals(e.getMetric(), "redbutton_click");
         assertEquals(e.getValue(), 1.0);
 
-        HashMap<String, String> tags = e.addMetadata();
+        HashMap<String, String> tags = e.getMetadata();
         assertEquals(tags.size(), 2);
         assertEquals(tags.get("SO:Name"), "Android");
         assertEquals(tags.get("SO:Version"), "5.1");
@@ -49,7 +60,10 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
         assertEquals(json.get("metric"), "redbutton_click");
         assertEquals(json.get("value"), 1.0);
 
-        assertEquals(json.getJSONObject("metadata").length(), 2);
+        assertEquals(json.getJSONObject("metadata").length(), 4);
+        assertEquals(json.getJSONObject("metadata").get("platform:type"), "Android");
+        assertEquals(json.getJSONObject("metadata").get("platform:release"),
+                (new Device()).getOSRelease());
         assertEquals(json.getJSONObject("metadata").get("SO:Name"), "Android");
         assertEquals(json.getJSONObject("metadata").get("SO:Version"), "5.1");
     }
@@ -67,10 +81,11 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
         assertEquals(json.get("metric"), "redbutton_click");
         assertEquals(json.get("value"), 1.0);
 
-        assertEquals(json.getJSONObject("metadata").length(), 3);
+        assertEquals(json.getJSONObject("metadata").length(), 5);
+        assertEquals(json.getJSONObject("metadata").get("platform:type"), "Android");
         assertEquals(json.getJSONObject("metadata").get("SO:Name"), "Android");
         assertEquals(json.getJSONObject("metadata").get("SO:Version"), "5.1");
-        assertEquals(json.getJSONObject("metadata").get("userid"), "user1");
+        assertEquals(json.getJSONObject("metadata").get("user:id"), "user1");
     }
 
     final public void testSendEvent() throws Exception {

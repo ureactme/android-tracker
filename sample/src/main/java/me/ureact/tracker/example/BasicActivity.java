@@ -20,7 +20,7 @@ public class BasicActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basic_activity);
 
-        String token = "b5165f8b05c7d7df472d0065c849d0ddcfe74dd0";
+        String token = "3d2c3f5fa903c250341a501bb1d1ced9153c0cb5";
         String appuser = "my_app_user_id";
         this.tracker = UReactMe.getInstance(this).getTracker(token, appuser);
     }

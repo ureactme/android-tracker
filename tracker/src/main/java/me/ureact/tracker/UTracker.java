@@ -12,9 +12,13 @@ import org.json.JSONObject;
 public class UTracker {
     private String token;
     private Context context;
-    private String user;
+    private User user;
 
     protected UTracker(Context context, String token, String user) {
+        this(context, token, new User(user));
+    }
+
+    protected UTracker(Context context, String token, User user) {
         this.context = context;
         this.token = token;
         this.user = user;
@@ -24,7 +28,7 @@ public class UTracker {
         return this.token;
     }
 
-    public String getUser() {
+    public User getUser() {
         return this.user;
     }
 
@@ -40,7 +44,9 @@ public class UTracker {
 
     public JSONObject toJSON(Event event) throws JSONException {
         JSONObject json = event.toJSON();
-        json.getJSONObject("metadata").put("userid", this.getUser());
+
+        // update event with the user's info
+        this.getUser().toJSON(json.getJSONObject("metadata"));
         return json;
     }
 }

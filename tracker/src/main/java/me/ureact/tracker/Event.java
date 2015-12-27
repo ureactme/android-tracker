@@ -52,7 +52,7 @@ public class Event {
         return this.value;
     }
 
-    public HashMap<String, String> addMetadata() {
+    public HashMap<String, String> getMetadata() {
         return this.tags;
     }
 
@@ -62,7 +62,11 @@ public class Event {
         json.put("date", df.format(this.date));
         json.put("metric", this.getMetric());
         json.put("value", this.getValue());
-        json.put("metadata", new JSONObject(this.addMetadata()));
+
+        json.put("metadata", new JSONObject(this.getMetadata()));
+
+        Device device = new Device();
+        device.toJSON(json.getJSONObject("metadata"));
         return json;
     }
 }

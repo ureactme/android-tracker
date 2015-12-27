@@ -29,6 +29,27 @@ public class YourActivity extends Activity {
 }
 ```
 
+Or you can add more information about your user:
+
+```
+public class YourActivity extends Activity {
+    private UTracker tracker;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        String token = "YOUR API TOKEN";
+        User appuser = new User("userid")
+                            .setEmail("myuser@gmail.com")
+                            .addPushNotificationId("push id")
+                            .addName("John Doe")
+                            .addPhoneNumber("+55 21 95555555");
+        this.tracker = UReactMe.getInstance(this).getTracker(token, appuser);
+    }
+}
+```
+
 Then, to track an event, you should do:
 
 ```

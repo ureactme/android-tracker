@@ -45,7 +45,7 @@ public class YourActivity extends Activity {
         User appuser = User.getInstance(this)
                             .setId("userid")
                             .setEmail("myuser@gmail.com")
-                            .addPushNotificationId("push id")
+                            .addGcmId("push id")
                             .addName("John Doe")
                             .addPhoneNumber("+55 21 95555555");
         this.tracker = UReactMe.getInstance(this).getTracker(token);

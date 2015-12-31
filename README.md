@@ -24,7 +24,9 @@ public class YourActivity extends Activity {
 
         String token = "YOUR API TOKEN";
         String appuser = "ANY ID THAT YOUR USER MIGHT HAVE ON YOUR APP (like his email, or an user_id code)";
-        this.tracker = UReactMe.getInstance(this).getTracker(token, appuser);
+        User user = User.getInstance(this)
+                        .setId(appuser);
+        this.tracker = UReactMe.getInstance(this).getTracker(token);
     }
 }
 ```
@@ -40,15 +42,21 @@ public class YourActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         String token = "YOUR API TOKEN";
-        User appuser = new User("userid")
+        User appuser = User.getInstance(this)
+                            .setId("userid")
                             .setEmail("myuser@gmail.com")
                             .addPushNotificationId("push id")
                             .addName("John Doe")
                             .addPhoneNumber("+55 21 95555555");
-        this.tracker = UReactMe.getInstance(this).getTracker(token, appuser);
+        this.tracker = UReactMe.getInstance(this).getTracker(token);
     }
 }
 ```
+
+The information you set for the user will be persisted through your activities.
+This way, you can set the user informations right after user registration,
+or when he gives you the information you need, and it will be automatically
+used by the tracker anywhere you send events.
 
 Then, to track an event, you should do:
 

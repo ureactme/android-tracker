@@ -14,14 +14,10 @@ public class UTracker {
     private Context context;
     private User user;
 
-    protected UTracker(Context context, String token, String user) {
-        this(context, token, new User(user));
-    }
-
-    protected UTracker(Context context, String token, User user) {
+    protected UTracker(Context context, String token) {
         this.context = context;
         this.token = token;
-        this.user = user;
+        this.user = User.getInstance(context);
     }
 
     public String getToken() {

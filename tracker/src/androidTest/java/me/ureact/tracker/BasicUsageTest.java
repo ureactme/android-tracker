@@ -16,17 +16,27 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
         super(Application.class);
     }
 
+    public final void setUp() {
+        User.clear(getContext());
+    }
+
+    public final void tearDown() {
+        User.clear(getContext());
+    }
+
     final public void testInitializeUTracker() throws Exception {
-        UTracker tracker = UReactMe.getInstance(getApplication()).getTracker("token1", "user1");
+        User u = User.getInstance(getContext()).setId("user1");
+        UTracker tracker = UReactMe.getInstance(getApplication()).getTracker("token1");
         assertEquals(tracker.getToken(), "token1");
         assertEquals(tracker.getUser().getId(), "user1");
     }
 
     final public void testInitializeUTrackerWithUserObject() throws Exception {
-        User u = new User("userid1")
+        User u = User.getInstance(getContext())
+                .setId("userid1")
                 .setEmail("bla@foo.com")
-                .setPushNotificationId("devid");
-        UTracker tracker = UReactMe.getInstance(getApplication()).getTracker("token1", u);
+                .setGcmId("devid");
+        UTracker tracker = UReactMe.getInstance(getApplication()).getTracker("token1");
 
         assertEquals(tracker.getUser(), u);
         assertEquals(tracker.getToken(), "token1");
@@ -69,19 +79,22 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
     }
 
     final public void testJsonifyEventFromTracker() throws Exception {
+        User u = User.getInstance(getContext())
+                .setId("user1");
         Event e = new Event()
                 .setMetric("redbutton_click")
                 .setValue(1)
                 .addMetadata("SO:Name", "Android")
                 .addMetadata("SO:Version", "5.1");
-        UTracker tracker = UReactMe.getInstance(getApplication()).getTracker("token1", "user1");
+        UTracker tracker = UReactMe.getInstance(getApplication()).getTracker("token1");
         JSONObject json = tracker.toJSON(e);
         assertEquals(json.length(), 4);
         assertTrue(json.has("date"));
         assertEquals(json.get("metric"), "redbutton_click");
         assertEquals(json.get("value"), 1.0);
 
-        assertEquals(json.getJSONObject("metadata").length(), 5);
+        Log.e("tag", json.getJSONObject("metadata").toString(2));
+        assertEquals(5, json.getJSONObject("metadata").length());
         assertEquals(json.getJSONObject("metadata").get("platform:type"), "Android");
         assertEquals(json.getJSONObject("metadata").get("SO:Name"), "Android");
         assertEquals(json.getJSONObject("metadata").get("SO:Version"), "5.1");
@@ -90,7 +103,8 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
 
     final public void testSendEvent() throws Exception {
         UReactMe uReactMe = UReactMe.getInstance(getApplication());
-        UTracker tracker = uReactMe.getTracker("b5165f8b05c7d7df472d0065c849d0ddcfe74dd0", "user1");
+        User u = User.getInstance(getContext()).setId("user1");
+        UTracker tracker = uReactMe.getTracker("b5165f8b05c7d7df472d0065c849d0ddcfe74dd0");
         tracker.send(new Event()
                 .setMetric("redbutton_click")
                 .setValue(1)

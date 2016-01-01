@@ -4,6 +4,8 @@ import android.content.Context;
 
 import java.util.HashMap;
 
+import me.ureact.tracker.exceptions.EmptyTokenException;
+
 /**
  * Created by pappacena on 12/12/15.
  */
@@ -17,6 +19,15 @@ public class UReactMe {
     }
 
     public UTracker getTracker(String token) {
+        return new UTracker(this.context, token);
+    }
+
+    public UTracker getTracker() throws EmptyTokenException {
+        String token = this.context.getString(R.string.ureactme_api_key);
+        if(token == null || token.length() == 0) {
+            String msg = "You must provide a ureactme_api_key on your res/values/strings.xml file";
+            throw new EmptyTokenException(msg);
+        }
         return new UTracker(this.context, token);
     }
 

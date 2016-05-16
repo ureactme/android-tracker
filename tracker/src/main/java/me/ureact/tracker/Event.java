@@ -63,7 +63,7 @@ public class Event {
         json.put("metric", this.getMetric());
         json.put("value", this.getValue());
 
-        json.put("metadata", new JSONObject(this.getMetadata()));
-        return Device.toJSON(json.getJSONObject("metadata"));
+        json.put("data", new JSONObject(this.getMetadata()));
+        return json;
     }
 }

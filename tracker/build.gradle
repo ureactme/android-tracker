@@ -10,8 +10,8 @@ ext {
 
     libraryDescription = 'Library to connect Android projects with ureact.me service'
 
-    siteUrl = 'https://github.com/nuuneoi/FBLikeAndroid'
-    gitUrl = 'https://github.com/nuuneoi/FBLikeAndroid.git'
+    siteUrl = 'https://github.com/ureactme/android-tracker'
+    gitUrl = 'https://github.com/ureactme/android-tracker.git'
 
     libraryVersion = '0.0.12'
 

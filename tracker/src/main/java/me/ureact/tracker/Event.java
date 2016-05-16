@@ -63,7 +63,10 @@ public class Event {
         json.put("metric", this.getMetric());
         json.put("value", this.getValue());
 
-        json.put("data", new JSONObject(this.getMetadata()));
+        json.put("data", null);
+        if (this.getMetadata().size() > 0) {
+            json.put("data", new JSONObject(this.getMetadata()));
+        }
         return json;
     }
 }

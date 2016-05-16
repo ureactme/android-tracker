@@ -181,7 +181,10 @@ public class User {
             data.put("phoneNumber", this.phoneNumber);
         }
 
-        json.put("data", data);
+        json.put("data", null);
+        if(data.length() > 0) {
+            json.put("data", data);
+        }
         json.put("auto_data", Device.toJSON());
 
         return json;

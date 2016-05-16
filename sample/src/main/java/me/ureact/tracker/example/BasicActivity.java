@@ -21,13 +21,12 @@ public class BasicActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basic_activity);
 
-        String token = "f9ac5e1b23ddb83dd8d16f396ca4ec47795378ef";
         User appuser = User.getInstance(this)
                 .setId("my_app_user_id")
                 .setEmail("exampleuser@users.com")
                 .setGcmId("push-id")
                 .setName("John Doe");
-        this.tracker = UReactMe.getInstance(this).getTracker(token);
+        this.tracker = UReactMe.getInstance(this).getTracker();
     }
 
     public void onRedButtonClick(View v) {

@@ -11,7 +11,7 @@ import me.ureact.tracker.exceptions.EmptyTokenException;
  * Created by pappacena on 12/12/15.
  */
 public class UReactMe {
-    public final static String BASE_URL = "http://ureact.me";
+    public final static String BASE_URL = "http://app.ureact.me";
     // public final static String BASE_URL = "http://192.168.1.46";
     private Context context;
     private static HashMap<Context, UReactMe> instances = new HashMap<Context, UReactMe>();

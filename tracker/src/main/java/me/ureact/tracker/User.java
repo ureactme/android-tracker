@@ -17,6 +17,7 @@ public class User {
     private String gcmId;
     private String phoneNumber;
     private String name;
+    private boolean isSync = false;
 
     private SharedPreferences pref;
     private static final String PREF_ID_KEY = "user:id";
@@ -24,6 +25,7 @@ public class User {
     private static final String PREF_GCM_ID_KEY = "user:gcm_id";
     private static final String PREF_PHONE_NUMBER_KEY = "user:phone_number";
     private static final String PREF_NAME_KEY = "user:name";
+    private static final String PREF_IS_SYNC_KEY = "user:is_sync";
 
     private User(Context context) {
         this.context = context;
@@ -78,11 +80,20 @@ public class User {
         this.gcmId = pref.getString(PREF_GCM_ID_KEY, null);
         this.phoneNumber = pref.getString(PREF_PHONE_NUMBER_KEY, null);
         this.name = pref.getString(PREF_NAME_KEY, null);
+        this.isSync = pref.getBoolean(PREF_IS_SYNC_KEY, false);
     }
 
     protected void setSharedPrefValue(String key, String value) {
         SharedPreferences.Editor edit = this.getSharedPref().edit();
         edit.putString(key, value);
+        edit.putBoolean(PREF_IS_SYNC_KEY, false);
+        edit.commit();
+    }
+
+    protected void setSharedPrefValue(String key, boolean value) {
+        SharedPreferences.Editor edit = this.getSharedPref().edit();
+        edit.putBoolean(key, value);
+        edit.putBoolean(PREF_IS_SYNC_KEY, false);
         edit.commit();
     }
 
@@ -116,6 +127,15 @@ public class User {
         return this;
     }
 
+    public void markAsSync() {
+        this.isSync = true;
+        this.setSharedPrefValue(PREF_IS_SYNC_KEY, true);
+    }
+
+    public boolean isSync() {
+        return this.isSync;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -142,23 +162,30 @@ public class User {
     }
 
     public JSONObject toJSON(JSONObject json) throws JSONException {
-        json.put("user:id", this.id);
+        json.put("id", this.id);
 
+        JSONObject data = new JSONObject();
         if (this.name != null && this.name.length() > 0) {
-            json.put("user:name", this.name);
+            data.put("name", this.name);
         }
 
         if (this.email != null && this.email.length() > 0) {
-            json.put("user:email", this.email);
+            data.put("email", this.email);
         }
 
         if (this.gcmId != null && this.gcmId.length() > 0) {
-            json.put("user:gcmId", this.gcmId);
+            data.put("gcmId", this.gcmId);
         }
 
         if (this.phoneNumber != null && this.phoneNumber.length() > 0) {
-            json.put("user:phoneNumber", this.phoneNumber);
+            data.put("phoneNumber", this.phoneNumber);
         }
+
+        json.put("data", null);
+        if(data.length() > 0) {
+            json.put("data", data);
+        }
+        json.put("auto_data", Device.toJSON());
 
         return json;
     }

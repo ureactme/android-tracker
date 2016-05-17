@@ -10,7 +10,14 @@ dependencies {
 }
 ```
 
-to your build.gradle dependencies.
+to your build.gradle dependencies. Add your UReact.me API key to your res/values/strings.xml
+
+```
+<resources>
+    <string name="app_name">Tracker</string>
+    <string name="ureactme_api_key">YOUR API TOKEN</string>
+</resources>
+```
 
 To initialize the library, you have to get a tracker using:
 
@@ -22,11 +29,10 @@ public class YourActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String token = "YOUR API TOKEN";
         String appuser = "ANY ID THAT YOUR USER MIGHT HAVE ON YOUR APP (like his email, or an user_id code)";
         User user = User.getInstance(this)
                         .setId(appuser);
-        this.tracker = UReactMe.getInstance(this).getTracker(token);
+        this.tracker = UReactMe.getInstance(this).getTracker();
     }
 }
 ```

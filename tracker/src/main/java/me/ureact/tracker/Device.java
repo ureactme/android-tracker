@@ -30,6 +30,11 @@ public class Device {
         return json;
     }
 
+    public static JSONObject toJSON() throws JSONException {
+        JSONObject json = new JSONObject();
+        return Device.toJSON(json);
+    }
+
     private static boolean isRooted() {
         String[] places = {"/sbin/", "/system/bin/", "/system/xbin/", "/data/local/xbin/",
                 "/data/local/bin/", "/system/sd/xbin/", "/system/bin/failsafe/", "/data/local/"};

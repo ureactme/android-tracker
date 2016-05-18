@@ -91,7 +91,7 @@ this.tracker.send(new Event()
 
 ## API Reference
 
-The ureact.me doesn't have a good API reference yet. So, here is the
+The ureact.me doesn't have a good API reference yet. So, here are the
 endpoints used by this library:
 
 ### POST /api/v2/event

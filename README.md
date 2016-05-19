@@ -6,7 +6,7 @@ To tracke events on Android platform, you should add:
 dependencies {
     // (...) your other dependencies
 
-    compile 'me.ureact.tracker:tracker:0.0.3+'
+    compile 'me.ureact.tracker:tracker:0.1.0+'
 }
 ```
 

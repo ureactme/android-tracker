@@ -36,10 +36,7 @@ public class Event {
         return this;
     }
 
-    public Event addMetadata(String tag, String value) throws InvalidTagName {
-        if(tag.equals("userid")) {
-            throw new InvalidTagName("userid tagname is reserved and cannot be used");
-        }
+    public Event addMetadata(String tag, String value) {
         this.tags.put(tag, value);
         return this;
     }

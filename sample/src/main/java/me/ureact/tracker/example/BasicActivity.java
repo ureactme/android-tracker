@@ -31,14 +31,20 @@ public class BasicActivity extends Activity {
 
     public void onRedButtonClick(View v) {
         Log.d("example", "tracker: " + this.tracker);
-        this.tracker.send(new Event().setMetric("redbutton_click"));
+        this.tracker.send(new Event()
+                .setCategory("redbutton")
+                .setAction("click"));
     }
 
     public void onGreenButtonClick(View v) {
-        this.tracker.send(new Event().setMetric("greenbutton_click"));
+        this.tracker.send(new Event()
+                .setCategory("greenbutton")
+                .setAction("click"));
     }
 
     public void onBlueButtonClick(View v) {
-        this.tracker.send(new Event().setMetric("bluebutton_click"));
+        this.tracker.send(new Event()
+                .setCategory("bluebutton")
+                .setAction("click"));
     }
 }

@@ -41,6 +41,7 @@ public class EventSender extends AsyncTask<Event, Event, Void> {
             String payload = json.toString();
 
             URL url = new URL(UReactMe.BASE_URL + "/api/v2/event/");
+            Log.d("ureact.me", "Sending event to " + UReactMe.BASE_URL);
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.setDoOutput(true);
@@ -61,10 +62,6 @@ public class EventSender extends AsyncTask<Event, Event, Void> {
             printout.write(payload.toString().getBytes("UTF-8"));
             printout.flush();
             printout.close();
-            Log.i("ureact.me", "Connection status code: " + connection.getResponseCode());
-            if (connection.getResponseCode() > 299 || connection.getResponseCode() < 200) {
-                Log.e("ureact.me", "Connection error: HTTP " + connection.getResponseCode());
-            }
 
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     connection.getInputStream(), "utf-8"));
@@ -73,6 +70,12 @@ public class EventSender extends AsyncTask<Event, Event, Void> {
                 responseText += line;
             }
             br.close();
+
+            Log.i("ureact.me", "Connection status code: " + connection.getResponseCode());
+            if (connection.getResponseCode() > 299 || connection.getResponseCode() < 200) {
+                Log.e("ureact.me", "Connection error: HTTP " + connection.getResponseCode());
+                Log.e("ureact.me", "Response: " + responseText);
+            }
 
             if(!this.tracker.getUser().isSync()) {
                 this.tracker.getUser().markAsSync();

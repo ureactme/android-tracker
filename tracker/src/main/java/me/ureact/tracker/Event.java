@@ -14,20 +14,31 @@ import me.ureact.tracker.exceptions.InvalidTagName;
  * Created by pappacena on 13/12/15.
  */
 public class Event {
-    private String metric;
+    private String category;
+    private String action;
+    private String label;
     private double value;
     private Date date;
     private HashMap<String, String> tags;
 
     public Event() {
-        this.metric = "";
         this.value = 1;
         this.tags = new HashMap<String, String>();
         this.date = new Date();
     }
 
-    public Event setMetric(String metric) {
-        this.metric = metric;
+    public Event setCategory(String category) {
+        this.category = category;
+        return this;
+    }
+
+    public Event setAction(String action) {
+        this.action = action;
+        return this;
+    }
+
+    public Event setLabel(String label) {
+        this.label = label;
         return this;
     }
 
@@ -41,8 +52,16 @@ public class Event {
         return this;
     }
 
-    public String getMetric() {
-        return this.metric;
+    public String getCategory() {
+        return category;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     public double getValue() {
@@ -57,7 +76,9 @@ public class Event {
         JSONObject json = new JSONObject();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
         json.put("date", df.format(this.date));
-        json.put("metric", this.getMetric());
+        json.put("category", this.getCategory());
+        json.put("action", this.getAction());
+        json.put("label", this.getLabel());
         json.put("value", this.getValue());
 
         json.put("data", null);

@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.UUID;
+
 /**
  * Created by pappacena on 27/12/15.
  */
@@ -162,6 +164,9 @@ public class User {
     }
 
     public JSONObject toJSON(JSONObject json) throws JSONException {
+        if(this.id == null) {
+            this.setId(UUID.randomUUID().toString());
+        }
         json.put("id", this.id);
 
         JSONObject data = new JSONObject();

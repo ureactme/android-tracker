@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/ureactme/android-tracker'
     gitUrl = 'https://github.com/ureactme/android-tracker.git'
 
-    libraryVersion = '0.1.1'
+    libraryVersion = '0.2.1'
 
     developerId = 'ureactme'
     developerName = 'Thiago Pappacena'
@@ -32,7 +32,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName "0.1.1"
+        versionName "0.2.1"
     }
     buildTypes {
         release {

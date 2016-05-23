@@ -20,6 +20,10 @@ public class UTracker {
         this.user = User.getInstance(context);
     }
 
+    public Context getContext() {
+        return this.context;
+    }
+
     public String getToken() {
         return this.token;
     }

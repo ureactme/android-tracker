@@ -40,8 +40,9 @@ public class EventSender extends AsyncTask<Event, Event, Void> {
             JSONObject json = this.tracker.toJSON(event);
             String payload = json.toString();
 
-            URL url = new URL(UReactMe.BASE_URL + "/api/v2/event/");
-            Log.d("ureact.me", "Sending event to " + UReactMe.BASE_URL);
+            String baseUrl = UReactMe.getBaseUrl(this.tracker.getContext());
+            URL url = new URL(baseUrl + "/api/v2/event/");
+            Log.d("ureact.me", "Sending event to " + baseUrl);
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.setDoOutput(true);

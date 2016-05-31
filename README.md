@@ -6,11 +6,18 @@ To tracke events on Android platform, you should add:
 dependencies {
     // (...) your other dependencies
 
-    compile 'me.ureact.tracker:tracker:0.0.3+'
+    compile 'me.ureact.tracker:tracker:0.1.0+'
 }
 ```
 
-to your build.gradle dependencies.
+to your build.gradle dependencies. Add your UReact.me API key to your res/values/strings.xml
+
+```
+<resources>
+    <string name="app_name">Tracker</string>
+    <string name="ureactme_api_key">YOUR API TOKEN</string>
+</resources>
+```
 
 To initialize the library, you have to get a tracker using:
 
@@ -22,11 +29,10 @@ public class YourActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String token = "YOUR API TOKEN";
         String appuser = "ANY ID THAT YOUR USER MIGHT HAVE ON YOUR APP (like his email, or an user_id code)";
         User user = User.getInstance(this)
                         .setId(appuser);
-        this.tracker = UReactMe.getInstance(this).getTracker(token);
+        this.tracker = UReactMe.getInstance(this).getTracker();
     }
 }
 ```
@@ -82,6 +88,39 @@ this.tracker.send(new Event()
                     .addMetadata("recent_push", "yes"));
 
 ```
+
+## API Reference
+
+The ureact.me doesn't have a good API reference yet. So, here are the
+endpoints used by this library:
+
+### POST /api/v2/event
+```
+{
+    "date": "2015-12-07 19:34:00",
+    "metric": "redbutton_click",
+    "user": "user_id",
+    "value": 1,
+    "data": {
+        "user-defined": 1
+    }
+}
+```
+
+The `user` key should be either the user's ID or the full user (see /api/v2/user endpoint below).
+On "data", we can put whatever data we want.
+
+### POST /api/v2/user
+```
+{
+    "id": "user identification",
+    "auto_data": {"platform": {"type": "Android", "version": "4.4.1"}},
+    "data": {"email": "foo@bla.com"}
+}
+```
+
+`auto_data` key holds all the device-specific data, automatically collected.
+`data` key holds user-defined data (you can put whatever you want here)
 
 
 ## How to release a new version?

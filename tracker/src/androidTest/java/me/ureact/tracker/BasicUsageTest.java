@@ -72,8 +72,7 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
 
         assertEquals(json.getJSONObject("metadata").length(), 4);
         assertEquals(json.getJSONObject("metadata").get("platform:type"), "Android");
-        assertEquals(json.getJSONObject("metadata").get("platform:release"),
-                (new Device()).getOSRelease());
+        assertEquals(json.getJSONObject("metadata").get("platform:release"), Device.VERSION_RELEASE);
         assertEquals(json.getJSONObject("metadata").get("SO:Name"), "Android");
         assertEquals(json.getJSONObject("metadata").get("SO:Version"), "5.1");
     }

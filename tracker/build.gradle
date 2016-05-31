@@ -10,10 +10,10 @@ ext {
 
     libraryDescription = 'Library to connect Android projects with ureact.me service'
 
-    siteUrl = 'https://github.com/nuuneoi/FBLikeAndroid'
-    gitUrl = 'https://github.com/nuuneoi/FBLikeAndroid.git'
+    siteUrl = 'https://github.com/ureactme/android-tracker'
+    gitUrl = 'https://github.com/ureactme/android-tracker.git'
 
-    libraryVersion = '0.0.12'
+    libraryVersion = '0.2.2'
 
     developerId = 'ureactme'
     developerName = 'Thiago Pappacena'
@@ -26,13 +26,13 @@ ext {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.0"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName "0.0.1"
+        versionName "0.2.2"
     }
     buildTypes {
         release {
@@ -45,7 +45,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.0'
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'

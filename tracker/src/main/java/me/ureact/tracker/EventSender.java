@@ -34,12 +34,15 @@ public class EventSender extends AsyncTask<Event, Event, Void> {
 
     private void sendEvent(Event event) {
         HttpURLConnection connection = null;
+        String responseText = "";
 
         try {
             JSONObject json = this.tracker.toJSON(event);
             String payload = json.toString();
 
-            URL url = new URL(UReactMe.BASE_URL + "/api/v1/metric/");
+            String baseUrl = UReactMe.getBaseUrl(this.tracker.getContext());
+            URL url = new URL(baseUrl + "/api/v2/event/");
+            Log.d("ureact.me", "Sending event to " + baseUrl);
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.setDoOutput(true);
@@ -63,15 +66,27 @@ public class EventSender extends AsyncTask<Event, Event, Void> {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     connection.getInputStream(), "utf-8"));
-            String responseText = "", line = "";
+            String line = "";
             while ((line = br.readLine()) != null) {
                 responseText += line;
             }
             br.close();
 
+            Log.i("ureact.me", "Connection status code: " + connection.getResponseCode());
+            if (connection.getResponseCode() > 299 || connection.getResponseCode() < 200) {
+                Log.e("ureact.me", "Connection error: HTTP " + connection.getResponseCode());
+                Log.e("ureact.me", "Response: " + responseText);
+            }
+
+            if(!this.tracker.getUser().isSync()) {
+                this.tracker.getUser().markAsSync();
+            }
+
             Log.d("ureact.me", "Got response code " + connection.getResponseCode() + " - " + responseText);
         } catch (IOException | JSONException e) {
+            e.printStackTrace();
             Log.e("ureact.me", "Connection problem: " + e.getMessage());
+            Log.e("ureact.me", "Response: " + responseText);
         } finally {
             if (connection != null) {
                 connection.disconnect();

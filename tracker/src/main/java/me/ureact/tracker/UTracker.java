@@ -20,6 +20,10 @@ public class UTracker {
         this.user = User.getInstance(context);
     }
 
+    public Context getContext() {
+        return this.context;
+    }
+
     public String getToken() {
         return this.token;
     }
@@ -42,7 +46,13 @@ public class UTracker {
         JSONObject json = event.toJSON();
 
         // update event with the user's info
-        this.getUser().toJSON(json.getJSONObject("metadata"));
+        User user = this.getUser();
+        if (!user.isSync()) {
+            json.put("user", user.toJSON());
+        }
+        else {
+            json.put("user", user.getId());
+        }
         return json;
     }
 }

@@ -1,5 +1,8 @@
 package me.ureact.tracker;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 
 import org.json.JSONException;
@@ -17,8 +20,21 @@ public class Device {
     public static final String MANUFACTURER = Build.MANUFACTURER;
     public static final String MODEL = Build.MODEL;
     public static final String SERIAL = Build.SERIAL;
+    private final Context context;
 
-    public static JSONObject toJSON(JSONObject json) throws JSONException {
+    private Device() {
+        context = null;
+    }
+
+    private Device(Context context) {
+        this.context = context;
+    }
+
+    public static Device getInstance(Context context) {
+        return new Device(context);
+    }
+
+    public JSONObject toJSON(JSONObject json) throws JSONException {
         json.put("platform:type", "Android");
         json.put("platform:release", VERSION_RELEASE);
         json.put("platform:sdk", VERSION_SDK);
@@ -27,15 +43,54 @@ public class Device {
         json.put("platform:model", MODEL);
         json.put("platform:serial", SERIAL);
         json.put("platform:root", isRooted());
+
+        String packageName = getPackage();
+        if (packageName != null) {
+            json.put("platform:package", packageName);
+        }
+
+        int version = getVersion();
+        if (version != 0) {
+            json.put("platform:version", version);
+        }
         return json;
     }
 
-    public static JSONObject toJSON() throws JSONException {
+    public JSONObject toJSON() throws JSONException {
         JSONObject json = new JSONObject();
-        return Device.toJSON(json);
+        return toJSON(json);
     }
 
-    private static boolean isRooted() {
+    /**
+     * Package name of the app
+     */
+    private String getPackage() {
+        try {
+            return context.getApplicationContext().getPackageName();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * The version name of this package from the manifest
+     */
+    private int getVersion() {
+        try {
+            PackageInfo pInfo = context.getApplicationContext().getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            return pInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException | NullPointerException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    /**
+     * Check if the device was rooted
+     */
+    private boolean isRooted() {
         String[] places = {"/sbin/", "/system/bin/", "/system/xbin/", "/data/local/xbin/",
                 "/data/local/bin/", "/system/sd/xbin/", "/system/bin/failsafe/", "/data/local/"};
         for (String where : places) {

@@ -25,7 +25,7 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
     }
 
     final public void testInitializeUTracker() throws Exception {
-        User u = User.getInstance(getContext()).setId("user1");
+        User.getInstance(getContext()).setId("user1");
         UTracker tracker = UReactMe.getInstance(getApplication()).getTracker("token1");
         assertEquals(tracker.getToken(), "token1");
         assertEquals(tracker.getUser().getId(), "user1");
@@ -44,12 +44,10 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
 
     final public void testCreateEvent() throws Exception {
         Event e = new Event()
-                .setMetric("redbutton_click")
                 .setValue(1)
                 .addMetadata("SO:Name", "Android")
                 .addMetadata("SO:Version", "5.1");
 
-        assertEquals(e.getMetric(), "redbutton_click");
         assertEquals(e.getValue(), 1.0);
 
         HashMap<String, String> tags = e.getMetadata();
@@ -60,7 +58,6 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
 
     final public void testJsonifyEvent() throws Exception {
         Event e = new Event()
-                .setMetric("redbutton_click")
                 .setValue(1)
                 .addMetadata("SO:Name", "Android")
                 .addMetadata("SO:Version", "5.1");
@@ -78,10 +75,9 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
     }
 
     final public void testJsonifyEventFromTracker() throws Exception {
-        User u = User.getInstance(getContext())
+        User.getInstance(getContext())
                 .setId("user1");
         Event e = new Event()
-                .setMetric("redbutton_click")
                 .setValue(1)
                 .addMetadata("SO:Name", "Android")
                 .addMetadata("SO:Version", "5.1");
@@ -102,10 +98,9 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
 
     final public void testSendEvent() throws Exception {
         UReactMe uReactMe = UReactMe.getInstance(getApplication());
-        User u = User.getInstance(getContext()).setId("user1");
+        User.getInstance(getContext()).setId("user1");
         UTracker tracker = uReactMe.getTracker("b5165f8b05c7d7df472d0065c849d0ddcfe74dd0");
         tracker.send(new Event()
-                .setMetric("redbutton_click")
                 .setValue(1)
                 .addMetadata("SO:Name", "Android"));
 

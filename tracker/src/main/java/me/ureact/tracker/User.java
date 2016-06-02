@@ -190,8 +190,7 @@ public class User {
         if(data.length() > 0) {
             json.put("data", data);
         }
-        json.put("auto_data", Device.toJSON());
-
+        json.put("auto_data", Device.getInstance(context).toJSON());
         return json;
     }
 }

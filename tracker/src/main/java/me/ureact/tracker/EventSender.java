@@ -42,7 +42,6 @@ public class EventSender extends AsyncTask<Event, Event, Void> {
 
             String baseUrl = UReactMe.getBaseUrl(this.tracker.getContext());
             URL url = new URL(baseUrl + "/api/v2/event/");
-            Log.d("ureact.me", "Sending event to " + baseUrl);
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.setDoOutput(true);
@@ -58,7 +57,6 @@ public class EventSender extends AsyncTask<Event, Event, Void> {
             connection.setFixedLengthStreamingMode(payload.getBytes().length);
 
             connection.connect();
-            Log.d("ureact.me", "Sending " + payload);
             DataOutputStream printout = new DataOutputStream(connection.getOutputStream());
             printout.write(payload.toString().getBytes("UTF-8"));
             printout.flush();
@@ -66,23 +64,22 @@ public class EventSender extends AsyncTask<Event, Event, Void> {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     connection.getInputStream(), "utf-8"));
-            String line = "";
+            String line;
             while ((line = br.readLine()) != null) {
                 responseText += line;
             }
             br.close();
 
-            Log.i("ureact.me", "Connection status code: " + connection.getResponseCode());
+            Log.d("ureact.me", connection.getResponseCode() + " " + baseUrl + " -> " + payload);
+
             if (connection.getResponseCode() > 299 || connection.getResponseCode() < 200) {
                 Log.e("ureact.me", "Connection error: HTTP " + connection.getResponseCode());
                 Log.e("ureact.me", "Response: " + responseText);
             }
 
-            if(!this.tracker.getUser().isSync()) {
+            if (!this.tracker.getUser().isSync()) {
                 this.tracker.getUser().markAsSync();
             }
-
-            Log.d("ureact.me", "Got response code " + connection.getResponseCode() + " - " + responseText);
         } catch (IOException | JSONException e) {
             e.printStackTrace();
             Log.e("ureact.me", "Connection problem: " + e.getMessage());

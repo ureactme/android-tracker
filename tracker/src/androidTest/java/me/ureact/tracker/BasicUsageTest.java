@@ -103,6 +103,5 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
         tracker.send(new Event()
                 .setValue(1)
                 .addMetadata("SO:Name", "Android"));
-
     }
 }

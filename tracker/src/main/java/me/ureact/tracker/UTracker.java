@@ -36,7 +36,6 @@ public class UTracker {
         try {
             EventSender sender = new EventSender(this);
             sender.execute(event);
-            // sender.get();
         } catch(Exception e) {
             Log.e("ureact.me", "Error sending event: " + e.getMessage());
         }

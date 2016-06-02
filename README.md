@@ -12,7 +12,7 @@ dependencies {
 
 to your build.gradle dependencies. Add your UReact.me API key to your res/values/strings.xml
 
-```
+```xml
 <resources>
     <string name="app_name">Tracker</string>
     <string name="ureactme_api_key">YOUR API TOKEN</string>
@@ -21,7 +21,7 @@ to your build.gradle dependencies. Add your UReact.me API key to your res/values
 
 To initialize the library, you have to get a tracker using:
 
-```
+```java
 public class YourActivity extends Activity {
     private UTracker tracker;
 
@@ -39,7 +39,7 @@ public class YourActivity extends Activity {
 
 Or you can add more information about your user:
 
-```
+```java
 public class YourActivity extends Activity {
     private UTracker tracker;
 
@@ -66,13 +66,13 @@ used by the tracker anywhere you send events.
 
 Then, to track an event, you should do:
 
-```
+```java
 this.tracker.send(new Event().setMetric("redbutton_click"));
 ```
 
 You can also add a value to this event:
 
-```
+```java
 this.tracker.send(new Event()
                     .setMetric("buy_item_click")
                     .setValue(5.35));
@@ -80,7 +80,7 @@ this.tracker.send(new Event()
 
 And extra metadata about the event:
 
-```
+```java
 this.tracker.send(new Event()
                     .setMetric("buy_item_click")
                     .setValue(5.35),
@@ -95,7 +95,7 @@ The ureact.me doesn't have a good API reference yet. So, here are the
 endpoints used by this library:
 
 ### POST /api/v2/event
-```
+```json
 {
     "date": "2015-12-07 19:34:00",
     "metric": "redbutton_click",
@@ -111,7 +111,7 @@ The `user` key should be either the user's ID or the full user (see /api/v2/user
 On "data", we can put whatever data we want.
 
 ### POST /api/v2/user
-```
+```json
 {
     "id": "user identification",
     "auto_data": {"platform": {"type": "Android", "version": "4.4.1"}},

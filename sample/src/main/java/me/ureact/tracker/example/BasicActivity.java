@@ -21,7 +21,7 @@ public class BasicActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basic_activity);
 
-        User appuser = User.getInstance(this)
+        User.getInstance(this)
                 .setId("my_app_user_id")
                 .setEmail("exampleuser@users.com")
                 .setGcmId("push-id")

@@ -56,10 +56,6 @@ public class UTracker {
         return this.user;
     }
 
-    public boolean isDryRun() {
-        return dryRun;
-    }
-
     /**
      * uReact does not send info to the backend but still show it in logcat if the
      * {@link UTracker#dryRun} is <code>true</code>
@@ -67,6 +63,10 @@ public class UTracker {
     public UTracker setDryRun(boolean dryRun) {
         this.dryRun = dryRun;
         return this;
+    }
+
+    public boolean isDryRun() {
+        return dryRun;
     }
 
     public boolean isTime2Sync() {

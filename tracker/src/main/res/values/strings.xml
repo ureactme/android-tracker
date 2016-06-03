@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Tracker</string>
     <string name="ureactme_api_key"></string>
-    <string name="ureactme_url">http://app.ureact.me</string>
+    <string name="ureactme_url">https://app.ureact.me</string>
 </resources>

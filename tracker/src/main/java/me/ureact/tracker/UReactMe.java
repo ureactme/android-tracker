@@ -22,7 +22,7 @@ public class UReactMe {
         try {
             return context.getString(R.string.ureactme_url);
         } catch (Exception e) {
-            return "http://app.ureact.me";
+            return "https://app.ureact.me";
         }
     }
 

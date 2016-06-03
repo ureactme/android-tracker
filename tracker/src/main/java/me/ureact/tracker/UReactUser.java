@@ -43,7 +43,7 @@ public class UReactUser {
 
     /**
      * Returns the instance of the user to be tracked by UReact.me
-     * <p/>
+     *
      * In the registration process, you need to get this User instance,
      * and set the user's information (like id, name, email, etc) using the setters of the
      * returning object.

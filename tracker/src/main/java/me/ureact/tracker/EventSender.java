@@ -6,6 +6,7 @@ import android.util.Log;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -60,8 +61,15 @@ public class EventSender extends AsyncTask<ArrayList<Event>, Event, Void> {
             printout.flush();
             printout.close();
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    connection.getInputStream(), "utf-8"));
+            InputStream in;
+            if(connection.getResponseCode() >= 400) {
+                in = connection.getErrorStream();
+            }
+            else {
+                in = connection.getInputStream();
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(in, "utf-8"));
             String line;
             while ((line = br.readLine()) != null) {
                 responseText += line;

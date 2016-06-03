@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.InetAddress;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -153,8 +154,8 @@ public class UTracker {
      */
     public boolean isBackendAvailable() {
         try {
-            String url = UReactMe.getBaseUrl(context).replaceFirst("http://", "");
-            InetAddress ip = InetAddress.getByName(url);
+            URL url = new URL(UReactMe.getBaseUrl(context));
+            InetAddress ip = InetAddress.getByName(url.getHost());
             return !ip.equals("");
         } catch (Exception e) {
             e.printStackTrace();

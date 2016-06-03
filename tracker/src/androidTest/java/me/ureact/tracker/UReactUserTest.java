@@ -4,26 +4,25 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.test.ApplicationTestCase;
-import android.util.Log;
 
 /**
  * Created by pappacena on 31/12/15.
  */
-public class UserTest extends ApplicationTestCase<Application> {
-    public UserTest() {
+public class UReactUserTest extends ApplicationTestCase<Application> {
+    public UReactUserTest() {
         super(Application.class);
     }
 
     public final void setUp() {
-        User.clear(getContext());
+        UReactUser.clear(getContext());
     }
 
     public final void tearDown() {
-        User.clear(getContext());
+        UReactUser.clear(getContext());
     }
 
     final public void testGetSharedPref() throws Exception {
-        SharedPreferences got = User.getInstance(getContext()).getSharedPref();
+        SharedPreferences got = UReactUser.getInstance(getContext()).getSharedPref();
 
         SharedPreferences expected = getContext().getSharedPreferences(
                 "me.ureact.tracker.test:ureactme:tracker:user", Context.MODE_PRIVATE);
@@ -32,7 +31,7 @@ public class UserTest extends ApplicationTestCase<Application> {
     }
 
     final public void testSetUserDataPersists() throws Exception {
-        User user = User.getInstance(getContext());
+        UReactUser user = UReactUser.getInstance(getContext());
 
         user.setId("123");
         user.setName("Thiago F. Pappacena");
@@ -40,8 +39,8 @@ public class UserTest extends ApplicationTestCase<Application> {
         user.setPhoneNumber("+55 21 95555555");
         user.setEmail("test@ureact.me");
 
-        User.instance = null;
-        user = User.getInstance(getContext());
+        UReactUser.instance = null;
+        user = UReactUser.getInstance(getContext());
         assertEquals(user.getId(), "123");
         assertEquals(user.getName(), "Thiago F. Pappacena");
         assertEquals(user.getGcmId(), "gcmid123");

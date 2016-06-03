@@ -8,7 +8,6 @@ import android.view.View;
 import me.ureact.tracker.Event;
 import me.ureact.tracker.UReactMe;
 import me.ureact.tracker.UTracker;
-import me.ureact.tracker.User;
 
 /**
  * Created by pappacena on 16/12/15.
@@ -21,7 +20,7 @@ public class BasicActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basic_activity);
 
-        User.getInstance(this)
+        UReactMe.getInstance(this).getTracker().getUser()
                 .setId("my_app_user_id")
                 .setEmail("exampleuser@users.com")
                 .setGcmId("push-id")
@@ -30,7 +29,6 @@ public class BasicActivity extends Activity {
     }
 
     public void onRedButtonClick(View v) {
-        Log.d("example", "tracker: " + this.tracker);
         this.tracker.send(new Event()
                 .setCategory("redbutton")
                 .setAction("click"));

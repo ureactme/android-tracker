@@ -17,22 +17,22 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
     }
 
     public final void setUp() {
-        User.clear(getContext());
+        UReactUser.clear(getContext());
     }
 
     public final void tearDown() {
-        User.clear(getContext());
+        UReactUser.clear(getContext());
     }
 
     final public void testInitializeUTracker() throws Exception {
-        User.getInstance(getContext()).setId("user1");
+        UReactUser.getInstance(getContext()).setId("user1");
         UTracker tracker = UReactMe.getInstance(getApplication()).getTracker("token1");
         assertEquals(tracker.getToken(), "token1");
         assertEquals(tracker.getUser().getId(), "user1");
     }
 
     final public void testInitializeUTrackerWithUserObject() throws Exception {
-        User u = User.getInstance(getContext())
+        UReactUser u = UReactUser.getInstance(getContext())
                 .setId("userid1")
                 .setEmail("bla@foo.com")
                 .setGcmId("devid");
@@ -75,7 +75,7 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
     }
 
     final public void testJsonifyEventFromTracker() throws Exception {
-        User.getInstance(getContext())
+        UReactUser.getInstance(getContext())
                 .setId("user1");
         Event e = new Event()
                 .setValue(1)
@@ -98,7 +98,7 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
 
     final public void testSendEvent() throws Exception {
         UReactMe uReactMe = UReactMe.getInstance(getApplication());
-        User.getInstance(getContext()).setId("user1");
+        UReactUser.getInstance(getContext()).setId("user1");
         UTracker tracker = uReactMe.getTracker("b5165f8b05c7d7df472d0065c849d0ddcfe74dd0");
         tracker.send(new Event()
                 .setValue(1)

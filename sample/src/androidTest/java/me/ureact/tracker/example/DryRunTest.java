@@ -5,7 +5,7 @@ import android.test.ApplicationTestCase;
 
 import me.ureact.tracker.Event;
 import me.ureact.tracker.UReactMe;
-import me.ureact.tracker.User;
+import me.ureact.tracker.UReactUser;
 
 /**
  * Created by Valeriy Palamarchuk on 6/1/16
@@ -19,11 +19,11 @@ public class DryRunTest extends ApplicationTestCase<Application> {
     public final void setUp() throws Exception {
         super.setUp();
         createApplication();
-        User.clear(getContext());
+        UReactUser.clear(getContext());
     }
 
     public final void tearDown() {
-        User.clear(getContext());
+        UReactUser.clear(getContext());
     }
 
     final public void testDryRun() throws Exception {

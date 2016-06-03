@@ -7,7 +7,7 @@ import android.test.ApplicationTestCase;
 import org.json.JSONObject;
 
 import me.ureact.tracker.Device;
-import me.ureact.tracker.User;
+import me.ureact.tracker.UReactUser;
 
 /**
  * Check if the lib returns correct device's info
@@ -24,7 +24,7 @@ public class DeviceTest extends ApplicationTestCase<Application> {
         super(Application.class);
     }
 
-    public DeviceTest (Class<Application> applicationClass) {
+    public DeviceTest(Class<Application> applicationClass) {
         super(applicationClass);
     }
 
@@ -32,12 +32,12 @@ public class DeviceTest extends ApplicationTestCase<Application> {
     protected void setUp() throws Exception {
         super.setUp();
         createApplication();
-        User.clear(getContext());
+        UReactUser.clear(getContext());
     }
 
     @Override
     public final void tearDown() {
-        User.clear(getContext());
+        UReactUser.clear(getContext());
     }
 
     final public void testDeviceInfo() throws Exception {

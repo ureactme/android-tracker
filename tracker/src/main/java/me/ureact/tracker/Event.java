@@ -7,8 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-
-import me.ureact.tracker.exceptions.InvalidTagName;
+import java.util.UUID;
 
 /**
  * Created by pappacena on 13/12/15.
@@ -17,34 +16,39 @@ public class Event {
     private String category;
     private String action;
     private String label;
+    private String guid;
     private double value;
     private Date date;
     private HashMap<String, String> tags;
 
     public Event() {
         this.value = 1;
-        this.tags = new HashMap<String, String>();
+        this.tags = new HashMap<>();
         this.date = new Date();
+        this.guid = UUID.randomUUID().toString();
     }
 
-    public Event setCategory(String category) {
+    public Event(String category, String action, String label, String guid, double value,
+                 Date date, HashMap<String, String> tags) {
         this.category = category;
-        return this;
-    }
-
-    public Event setAction(String action) {
         this.action = action;
-        return this;
-    }
-
-    public Event setLabel(String label) {
         this.label = label;
-        return this;
+        this.guid = guid;
+        this.value = value;
+        this.date = date;
+        this.tags = tags;
     }
 
-    public Event setValue(double value) {
-        this.value = value;
-        return this;
+    public String getGuid() {
+        return guid;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public HashMap<String, String> getTags() {
+        return tags;
     }
 
     public Event addMetadata(String tag, String value) {
@@ -56,16 +60,36 @@ public class Event {
         return category;
     }
 
+    public Event setCategory(String category) {
+        this.category = category;
+        return this;
+    }
+
     public String getAction() {
         return action;
+    }
+
+    public Event setAction(String action) {
+        this.action = action;
+        return this;
     }
 
     public String getLabel() {
         return label;
     }
 
+    public Event setLabel(String label) {
+        this.label = label;
+        return this;
+    }
+
     public double getValue() {
         return this.value;
+    }
+
+    public Event setValue(double value) {
+        this.value = value;
+        return this;
     }
 
     public HashMap<String, String> getMetadata() {
@@ -86,5 +110,18 @@ public class Event {
             json.put("data", new JSONObject(this.getMetadata()));
         }
         return json;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "category='" + category + '\'' +
+                ", action='" + action + '\'' +
+                ", label='" + label + '\'' +
+                ", guid='" + guid + '\'' +
+                ", value=" + value +
+                ", date=" + date +
+                ", tags=" + tags +
+                '}';
     }
 }

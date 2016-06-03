@@ -33,6 +33,10 @@ public class UReactMe {
         return instance;
     }
 
+    public UReactUser getUser() {
+        return getTracker().getUser();
+    }
+
     public UTracker getTracker(String token) {
         return UTracker.getInstance(this.context, token);
     }

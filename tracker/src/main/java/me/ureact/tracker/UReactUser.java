@@ -6,36 +6,42 @@ import android.content.SharedPreferences;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.UUID;
 
 /**
  * Created by pappacena on 27/12/15.
  */
-public class User {
-    protected static User instance;
-    private Context context;
-    private String id;
-    private String email;
-    private String gcmId;
-    private String phoneNumber;
-    private String name;
-    private boolean isSync = false;
-
-    private SharedPreferences pref;
+public class UReactUser {
     private static final String PREF_ID_KEY = "user:id";
     private static final String PREF_EMAIL_KEY = "user:email";
     private static final String PREF_GCM_ID_KEY = "user:gcm_id";
     private static final String PREF_PHONE_NUMBER_KEY = "user:phone_number";
     private static final String PREF_NAME_KEY = "user:name";
     private static final String PREF_IS_SYNC_KEY = "user:is_sync";
+    private static final String PREF_LAST_DATE_SYNC = "user:last_date_sync";
+    protected static UReactUser instance;
+    private Context context;
+    private String id;
+    private Date lastDateSync;
+    private String email;
+    private String gcmId;
+    private String phoneNumber;
+    private String name;
+    private boolean isSync = false;
+    private SharedPreferences pref;
 
-    private User(Context context) {
+    private UReactUser(Context context) {
         this.context = context;
+    }
+
+    private UReactUser() {
+
     }
 
     /**
      * Returns the instance of the user to be tracked by UReact.me
-     *
+     * <p/>
      * In the registration process, you need to get this User instance,
      * and set the user's information (like id, name, email, etc) using the setters of the
      * returning object.
@@ -43,12 +49,25 @@ public class User {
      * @param context
      * @return
      */
-    public static User getInstance(Context context) {
-        if(User.instance == null) {
-            User.instance = new User(context);
-            User.instance.loadFromSharedPref();
+    protected static UReactUser getInstance(Context context) {
+        if (UReactUser.instance == null) {
+            UReactUser.instance = new UReactUser(context);
+            UReactUser.instance.loadFromSharedPref();
         }
-        return User.instance;
+        return UReactUser.instance;
+    }
+
+    /**
+     * Clear all user data from shared preferences and singleton instance
+     *
+     * @param context
+     */
+    public static void clear(Context context) {
+        UReactUser u = UReactUser.getInstance(context);
+        SharedPreferences.Editor e = u.getSharedPref().edit();
+        e.clear();
+        e.commit();
+        u.loadFromSharedPref();
     }
 
     protected SharedPreferences getSharedPref() {
@@ -58,18 +77,6 @@ public class User {
                     pkgName + ":ureactme:tracker:user", Context.MODE_PRIVATE);
         }
         return this.pref;
-    }
-
-    /**
-     * Clear all user data from shared preferences and singleton instance
-     * @param context
-     */
-    public static void clear(Context context) {
-        User u = User.getInstance(context);
-        SharedPreferences.Editor e = u.getSharedPref().edit();
-        e.clear();
-        e.commit();
-        u.loadFromSharedPref();
     }
 
     /**
@@ -83,11 +90,19 @@ public class User {
         this.phoneNumber = pref.getString(PREF_PHONE_NUMBER_KEY, null);
         this.name = pref.getString(PREF_NAME_KEY, null);
         this.isSync = pref.getBoolean(PREF_IS_SYNC_KEY, false);
+        this.lastDateSync = new Date(pref.getLong(PREF_LAST_DATE_SYNC, 0));
     }
 
     protected void setSharedPrefValue(String key, String value) {
         SharedPreferences.Editor edit = this.getSharedPref().edit();
         edit.putString(key, value);
+        edit.putBoolean(PREF_IS_SYNC_KEY, false);
+        edit.commit();
+    }
+
+    protected void setSharedPrefValue(String key, long value) {
+        SharedPreferences.Editor edit = this.getSharedPref().edit();
+        edit.putLong(key, value);
         edit.putBoolean(PREF_IS_SYNC_KEY, false);
         edit.commit();
     }
@@ -99,33 +114,9 @@ public class User {
         edit.commit();
     }
 
-    public User setId(String id) {
-        this.id = id;
-        this.setSharedPrefValue(PREF_ID_KEY, id);
-        return this;
-    }
-
-    public User setName(String name) {
-        this.name = name;
-        this.setSharedPrefValue(PREF_NAME_KEY, name);
-        return this;
-    }
-
-    public User setEmail(String email) {
-        this.email = email;
-        this.setSharedPrefValue(PREF_EMAIL_KEY, email);
-        return this;
-    }
-
-    public User setGcmId(String gcmId) {
-        this.gcmId = gcmId;
-        this.setSharedPrefValue(PREF_GCM_ID_KEY, gcmId);
-        return this;
-    }
-
-    public User setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-        this.setSharedPrefValue(PREF_PHONE_NUMBER_KEY, phoneNumber);
+    public UReactUser setLastDateSync() {
+        this.lastDateSync = new Date();
+        this.setSharedPrefValue(PREF_LAST_DATE_SYNC, lastDateSync.getTime());
         return this;
     }
 
@@ -142,20 +133,54 @@ public class User {
         return this.name;
     }
 
+    public UReactUser setName(String name) {
+        this.name = name;
+        this.setSharedPrefValue(PREF_NAME_KEY, name);
+        return this;
+    }
+
+    public Date getLastDateSync() {
+        return this.lastDateSync;
+    }
+
     public String getId() {
         return this.id;
+    }
+
+    public UReactUser setId(String id) {
+        this.id = id;
+        this.setSharedPrefValue(PREF_ID_KEY, id);
+        return this;
     }
 
     public String getEmail() {
         return this.email;
     }
 
+    public UReactUser setEmail(String email) {
+        this.email = email;
+        this.setSharedPrefValue(PREF_EMAIL_KEY, email);
+        return this;
+    }
+
     public String getGcmId() {
         return this.gcmId;
     }
 
+    public UReactUser setGcmId(String gcmId) {
+        this.gcmId = gcmId;
+        this.setSharedPrefValue(PREF_GCM_ID_KEY, gcmId);
+        return this;
+    }
+
     public String getPhoneNumber() {
         return this.phoneNumber;
+    }
+
+    public UReactUser setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        this.setSharedPrefValue(PREF_PHONE_NUMBER_KEY, phoneNumber);
+        return this;
     }
 
     public JSONObject toJSON() throws JSONException {
@@ -164,7 +189,7 @@ public class User {
     }
 
     public JSONObject toJSON(JSONObject json) throws JSONException {
-        if(this.id == null) {
+        if (this.id == null) {
             this.setId(UUID.randomUUID().toString());
         }
         json.put("id", this.id);
@@ -187,7 +212,7 @@ public class User {
         }
 
         json.put("data", null);
-        if(data.length() > 0) {
+        if (data.length() > 0) {
             json.put("data", data);
         }
         json.put("auto_data", Device.getInstance(context).toJSON());

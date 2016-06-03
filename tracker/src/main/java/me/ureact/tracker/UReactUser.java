@@ -20,7 +20,9 @@ public class UReactUser {
     private static final String PREF_NAME_KEY = "user:name";
     private static final String PREF_IS_SYNC_KEY = "user:is_sync";
     private static final String PREF_LAST_DATE_SYNC = "user:last_date_sync";
+
     protected static UReactUser instance;
+
     private Context context;
     private String id;
     private Date lastDateSync;

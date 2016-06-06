@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Logging of the app with {@link ULogger#TAG} tag and multiline support
- * <p/>
+ *
  * Created by Valeriy Palamarchuk on 6/6/16
  */
 public class ULogger {

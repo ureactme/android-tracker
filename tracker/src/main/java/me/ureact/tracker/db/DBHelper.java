@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +16,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import me.ureact.tracker.Event;
+import me.ureact.tracker.util.ULogger;
 
 /**
  * Created by Valeriy Palamarchuk on 6/1/16
@@ -79,6 +79,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.insert(Contract.EventEntry.TABLE_NAME, null, values);
         db.close();
+
+        ULogger.i("Saved: " + event.toString());
     }
 
     /**
@@ -123,6 +125,7 @@ public class DBHelper extends SQLiteOpenHelper {
             e.printStackTrace();
         } finally {
             db.close();
+            ULogger.i("Get events: " + events.size());
         }
         return events;
     }
@@ -141,6 +144,7 @@ public class DBHelper extends SQLiteOpenHelper {
             e.printStackTrace();
         } finally {
             db.close();
+            ULogger.i("All events removed");
         }
     }
 

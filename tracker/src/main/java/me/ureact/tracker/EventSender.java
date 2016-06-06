@@ -12,6 +12,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import me.ureact.tracker.util.ULogger;
+
 /**
  * Created by pappacena on 15/12/15.
  */
@@ -30,7 +32,8 @@ public class EventSender extends AsyncTask<ArrayList<Event>, Event, Void> {
         ArrayList<Event> events = params[0];
         String payload = tracker.toJSON(events).toString();
         if (dryRun) {
-            Log.d("ureact.me", "DRY RUN -> " + payload);
+            ULogger.d("DRY RUN -> " + payload);
+            tracker.syncSuccessful();
         } else {
             sendEvent(payload);
         }
@@ -76,18 +79,18 @@ public class EventSender extends AsyncTask<ArrayList<Event>, Event, Void> {
             }
             br.close();
 
-            Log.d("ureact.me", connection.getResponseCode() + " " + baseUrl + " -> " + payload);
+            ULogger.d(connection.getResponseCode() + " " + baseUrl + " -> " + payload);
 
             if (connection.getResponseCode() > 299 || connection.getResponseCode() < 200) {
-                Log.e("ureact.me", "Connection error: HTTP " + connection.getResponseCode());
-                Log.e("ureact.me", "Response: " + responseText);
+                ULogger.e("Connection error: HTTP " + connection.getResponseCode());
+                ULogger.e("Response: " + responseText);
             }
 
             tracker.syncSuccessful();
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("ureact.me", "Connection problem: " + e.getMessage());
-            Log.e("ureact.me", "Response: " + responseText);
+            ULogger.e("Connection problem: " + e.getMessage());
+            ULogger.e("Response: " + responseText);
         } finally {
             if (connection != null) {
                 connection.disconnect();

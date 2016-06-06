@@ -1,7 +1,10 @@
 package me.ureact.tracker;
 
 import android.content.Context;
-import android.util.Log;
+import android.text.TextUtils;
+
+import me.ureact.tracker.exceptions.EmptyTokenException;
+import me.ureact.tracker.util.ULogger;
 
 /**
  * Created by pappacena on 12/12/15.
@@ -42,12 +45,16 @@ public class UReactMe {
     }
 
     public UTracker getTracker() {
-        String token = this.context.getString(R.string.ureactme_api_key);
-        if (token == null || token.length() == 0) {
-            String msg = "You must provide a ureactme_api_key on your res/values/strings.xml file";
-            Log.e("ureact.me", msg);
+        try {
+            String token = this.context.getString(R.string.ureactme_api_key);
+            if (TextUtils.isEmpty(token)) {
+                String msg = "You must provide a ureactme_api_key on your res/values/strings.xml file";
+                throw new EmptyTokenException(msg);
+            }
+            return UTracker.getInstance(this.context, token);
+        } catch (EmptyTokenException e) {
+            ULogger.e(e.getMessage());
             return null;
         }
-        return UTracker.getInstance(this.context, token);
     }
 }

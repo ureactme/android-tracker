@@ -1,7 +1,6 @@
 package me.ureact.tracker;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +14,7 @@ import java.util.Date;
 import me.ureact.tracker.db.AddEventCallback;
 import me.ureact.tracker.db.DBHelper;
 import me.ureact.tracker.db.GetEventsCallback;
+import me.ureact.tracker.util.ULogger;
 
 /**
  * Created by pappacena on 13/12/15.
@@ -57,6 +57,10 @@ public class UTracker {
         return this.user;
     }
 
+    public boolean isDryRun() {
+        return dryRun;
+    }
+
     /**
      * uReact does not send info to the backend but still show it in logcat if the
      * {@link UTracker#dryRun} is <code>true</code>
@@ -64,10 +68,6 @@ public class UTracker {
     public UTracker setDryRun(boolean dryRun) {
         this.dryRun = dryRun;
         return this;
-    }
-
-    public boolean isDryRun() {
-        return dryRun;
     }
 
     public boolean isTime2Sync() {
@@ -93,6 +93,8 @@ public class UTracker {
             public void onFinish() {
                 if (isBackendAvailable()) {
                     sync();
+                } else {
+                    ULogger.w(UReactMe.getBaseUrl(context) + " not available");
                 }
             }
         });
@@ -131,7 +133,7 @@ public class UTracker {
             }
         } catch (JSONException e1) {
             e1.printStackTrace();
-            Log.e("ureact.me", "Failed to parse ArrayList<Event> to json: " + events.toString());
+            ULogger.e("Failed to parse ArrayList<Event> to json: " + events.toString());
         }
         return json;
     }
@@ -158,7 +160,6 @@ public class UTracker {
             InetAddress ip = InetAddress.getByName(url.getHost());
             return !ip.equals("");
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
 

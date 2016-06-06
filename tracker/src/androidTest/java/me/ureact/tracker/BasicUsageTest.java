@@ -8,6 +8,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import me.ureact.tracker.util.ULogger;
+
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
@@ -88,7 +90,6 @@ public class BasicUsageTest extends ApplicationTestCase<Application> {
         assertEquals(json.get("metric"), "redbutton_click");
         assertEquals(json.get("value"), 1.0);
 
-        Log.e("tag", json.getJSONObject("metadata").toString(2));
         assertEquals(5, json.getJSONObject("metadata").length());
         assertEquals(json.getJSONObject("metadata").get("platform:type"), "Android");
         assertEquals(json.getJSONObject("metadata").get("SO:Name"), "Android");

@@ -20,13 +20,14 @@ import me.ureact.tracker.util.ULogger;
  * Created by pappacena on 13/12/15.
  */
 public class UTracker {
-    private static final long SYNC_PERIOD = 1000 * 60 * 30;
+    private static final long DEFAULT_SYNC_PERIOD = 1000 * 60 * 30;
     private static UTracker instance;
     private DBHelper db;
     private String token;
     private Context context;
     private UReactUser user;
     private boolean dryRun;
+    private long syncPeriod = DEFAULT_SYNC_PERIOD;
 
     private UTracker() {
     }
@@ -43,6 +44,15 @@ public class UTracker {
             instance = new UTracker(context, token);
         }
         return instance;
+    }
+
+    public long getSyncPeriod() {
+        return syncPeriod;
+    }
+
+    public UTracker setSyncPeriod(long syncPeriod) {
+        this.syncPeriod = syncPeriod;
+        return this;
     }
 
     public Context getContext() {
@@ -73,7 +83,7 @@ public class UTracker {
     public boolean isTime2Sync() {
         Date lastDateSync = getUser().getLastDateSync();
         Date now = new Date();
-        long min = (now.getTime() - lastDateSync.getTime()) / SYNC_PERIOD;
+        long min = (now.getTime() - lastDateSync.getTime()) / syncPeriod;
         return min > 1.0;
     }
 

@@ -20,7 +20,7 @@ public class BasicActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basic_activity);
 
-        UReactMe.getInstance(this).getTracker().setDryRun(true)
+        UReactMe.getInstance(this).getTracker().setDryRun(true).setSyncPeriod(1000)
                 .getUser()
                 .setId("my_app_user_id")
                 .setEmail("exampleuser@users.com")

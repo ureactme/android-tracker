@@ -89,6 +89,9 @@ public class UTracker {
 
     public void syncSuccessful() {
         getUser().setLastDateSync();
+        if (!getUser().isSynced()){
+            getUser().setSynced();
+        }
         db.deleteAllEventsInBackground();
     }
 
@@ -136,7 +139,7 @@ public class UTracker {
 
             // update event with the user's info
             UReactUser user = this.getUser();
-            if (!user.isSync()) {
+            if (!user.isSynced()) {
                 json.put("user", user.toJSON());
             } else {
                 json.put("user", user.getId());
@@ -153,7 +156,7 @@ public class UTracker {
 
         // update event with the user's info
         UReactUser user = this.getUser();
-        if (!user.isSync()) {
+        if (!user.isSynced()) {
             json.put("user", user.toJSON());
         } else {
             json.put("user", user.getId());

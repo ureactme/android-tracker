@@ -125,7 +125,6 @@ public class DBHelper extends SQLiteOpenHelper {
             e.printStackTrace();
         } finally {
             db.close();
-            ULogger.i("Get events: " + events.size());
         }
         return events;
     }
@@ -144,7 +143,6 @@ public class DBHelper extends SQLiteOpenHelper {
             e.printStackTrace();
         } finally {
             db.close();
-            ULogger.i("All events removed");
         }
     }
 

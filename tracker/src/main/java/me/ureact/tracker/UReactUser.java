@@ -122,12 +122,12 @@ public class UReactUser {
         return this;
     }
 
-    public void markAsSync() {
+    public void setSynced() {
         this.isSync = true;
         this.setSharedPrefValue(PREF_IS_SYNC_KEY, true);
     }
 
-    public boolean isSync() {
+    public boolean isSynced() {
         return this.isSync;
     }
 

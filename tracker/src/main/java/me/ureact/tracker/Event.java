@@ -114,14 +114,7 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Event{" +
-                "category='" + category + '\'' +
-                ", action='" + action + '\'' +
-                ", label='" + label + '\'' +
-                ", guid='" + guid + '\'' +
-                ", value=" + value +
-                ", date=" + date +
-                ", tags=" + tags +
-                '}';
+        return "Event[" + category + " – " + action + " - " + label + " – " + value + "], "
+                + guid + ", " + date + ", tags=" + tags;
     }
 }

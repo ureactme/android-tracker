@@ -88,7 +88,7 @@ public class Device {
         try {
             TelephonyManager mngr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             deviceId = mngr.getDeviceId();
-        } catch (NullPointerException e) {
+        } catch (SecurityException|NullPointerException e) {
             return null;
         }
         return deviceId;

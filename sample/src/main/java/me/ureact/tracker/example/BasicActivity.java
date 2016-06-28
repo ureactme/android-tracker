@@ -30,9 +30,11 @@ public class BasicActivity extends Activity {
     }
 
     public void onRedButtonClick(View v) {
+        // Create the event and try to send it immediatly (dont wait sync period)
+        // this.tracker.send(event, true)
         this.tracker.send(new Event()
                 .setCategory("redbutton")
-                .setAction("click"));
+                .setAction("click"), true);
     }
 
     public void onGreenButtonClick(View v) {

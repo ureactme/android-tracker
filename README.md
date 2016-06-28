@@ -89,6 +89,16 @@ this.tracker.send(new Event()
 
 ```
 
+By default, the events are sent to the backend every 30 minutes.
+To send the events to the backend immediately, you can for the sync of an event
+with a second argument to `this.tracker.send(event, forceSync)` method:
+
+```java
+this.tracker.send(new Event()
+                    .setMetric("buy_item_click")
+                    .setValue(5.35), true);
+```
+
 ## API Reference
 
 The ureact.me doesn't have a good API reference yet. So, here are the

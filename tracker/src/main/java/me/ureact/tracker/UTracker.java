@@ -100,12 +100,12 @@ public class UTracker {
      *
      * @param event to store
      */
-    public void send(final Event event) {
+    public void send(final Event event, final boolean forceSync) {
         db.addEventInBackground(event, new AddEventCallback() {
             @Override
             public void onFinish() {
                 if (isBackendAvailable()) {
-                    sync();
+                    sync(forceSync);
                 } else {
                     ULogger.w(UReactMe.getBaseUrl(context) + " not available");
                 }
@@ -113,11 +113,15 @@ public class UTracker {
         });
     }
 
+    public void send(final Event event) {
+        this.send(event, false);
+    }
+
     /**
      * Check if it's time to sync: true -> process sync, false -> do nothing
      */
-    private void sync() {
-        if (isTime2Sync()) {
+    private void sync(boolean force) {
+        if (force || isTime2Sync()) {
             db.getEventsInBackground(new GetEventsCallback() {
                 @SuppressWarnings("unchecked")
                 @Override
@@ -126,6 +130,10 @@ public class UTracker {
                 }
             });
         }
+    }
+
+    private void sync() {
+        this.sync(false);
     }
 
     public JSONObject toJSON(ArrayList<Event> events) {

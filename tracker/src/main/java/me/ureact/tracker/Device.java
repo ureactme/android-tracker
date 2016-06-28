@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,12 +55,43 @@ public class Device {
         if (version != 0) {
             json.put("platform:version", version);
         }
+
+        String imei = getIMEI();
+        if (imei != null) {
+            json.put("platform:imei", imei);
+        }
+
+        String androidId = getAndroidId();
+        if (androidId != null) {
+            json.put("platform:android_id", androidId);
+        }
         return json;
+    }
+
+    public String getAndroidId() {
+        String id;
+        try {
+            id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        } catch (NullPointerException e) {
+            return null;
+        }
+        return id;
     }
 
     public JSONObject toJSON() throws JSONException {
         JSONObject json = new JSONObject();
         return toJSON(json);
+    }
+
+    private String getIMEI() {
+        String deviceId;
+        try {
+            TelephonyManager mngr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            deviceId = mngr.getDeviceId();
+        } catch (NullPointerException e) {
+            return null;
+        }
+        return deviceId;
     }
 
     /**

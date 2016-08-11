@@ -114,7 +114,7 @@ public class Device {
             PackageInfo pInfo = context.getApplicationContext().getPackageManager()
                     .getPackageInfo(context.getPackageName(), 0);
             return pInfo.versionCode;
-        } catch (PackageManager.NameNotFoundException | NullPointerException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }

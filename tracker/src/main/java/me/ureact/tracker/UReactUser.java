@@ -31,10 +31,12 @@ public class UReactUser {
     private String phoneNumber;
     private String name;
     private boolean isSync = false;
+    private static Device device;
     private SharedPreferences pref;
 
     private UReactUser(Context context) {
         this.context = context;
+        device = Device.getInstance(context);
     }
 
     private UReactUser() {
@@ -122,9 +124,9 @@ public class UReactUser {
         return this;
     }
 
-    public void setSynced() {
-        this.isSync = true;
-        this.setSharedPrefValue(PREF_IS_SYNC_KEY, true);
+    public void setSynced(boolean synced) {
+        this.isSync = synced;
+        this.setSharedPrefValue(PREF_IS_SYNC_KEY, synced);
     }
 
     public boolean isSynced() {
@@ -217,7 +219,7 @@ public class UReactUser {
         if (data.length() > 0) {
             json.put("data", data);
         }
-        json.put("auto_data", Device.getInstance(context).toJSON());
+        json.put("auto_data", device.toJSON());
         return json;
     }
 }

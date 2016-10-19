@@ -89,8 +89,8 @@ public class UTracker {
 
     public void syncSuccessful() {
         getUser().setLastDateSync();
-        if (!getUser().isSynced()){
-            getUser().setSynced();
+        if (!getUser().isSynced()) {
+            getUser().setSynced(true);
         }
         db.deleteAllEventsInBackground();
     }

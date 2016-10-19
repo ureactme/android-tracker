@@ -16,24 +16,24 @@ import java.io.File;
  * Created by pappacena on 27/12/15.
  */
 public class Device {
-    public static final String VERSION_RELEASE = Build.VERSION.RELEASE;
-    public static final int VERSION_SDK = Build.VERSION.SDK_INT;
-    public static final String BRAND = Build.BRAND;
-    public static final String MANUFACTURER = Build.MANUFACTURER;
-    public static final String MODEL = Build.MODEL;
-    public static final String SERIAL = Build.SERIAL;
+    private static final String VERSION_RELEASE = Build.VERSION.RELEASE;
+    private static final int VERSION_SDK = Build.VERSION.SDK_INT;
+    private static final String BRAND = Build.BRAND;
+    private static final String MANUFACTURER = Build.MANUFACTURER;
+    private static final String MODEL = Build.MODEL;
+    private static final String SERIAL = Build.SERIAL;
+    private static Device instance;
     private final Context context;
-
-    private Device() {
-        context = null;
-    }
 
     private Device(Context context) {
         this.context = context;
     }
 
     public static Device getInstance(Context context) {
-        return new Device(context);
+        if (instance == null) {
+            instance = new Device(context);
+        }
+        return instance;
     }
 
     public JSONObject toJSON(JSONObject json) throws JSONException {

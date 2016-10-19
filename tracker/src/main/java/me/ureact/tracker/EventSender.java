@@ -1,7 +1,6 @@
 package me.ureact.tracker;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -65,10 +64,9 @@ public class EventSender extends AsyncTask<ArrayList<Event>, Event, Void> {
             printout.close();
 
             InputStream in;
-            if(connection.getResponseCode() >= 400) {
+            if (connection.getResponseCode() >= 400) {
                 in = connection.getErrorStream();
-            }
-            else {
+            } else {
                 in = connection.getInputStream();
             }
 

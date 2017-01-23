@@ -79,8 +79,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.insert(Contract.EventEntry.TABLE_NAME, null, values);
         db.close();
-
-        ULogger.i("Saved: " + event.toString());
     }
 
     /**

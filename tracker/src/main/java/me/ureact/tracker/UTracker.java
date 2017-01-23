@@ -101,6 +101,9 @@ public class UTracker {
      * @param event to store
      */
     public void send(final Event event, final boolean forceSync) {
+        if (dryRun) {
+            ULogger.i("Saved: " + event.toString());
+        }
         db.addEventInBackground(event, new AddEventCallback() {
             @Override
             public void onFinish() {

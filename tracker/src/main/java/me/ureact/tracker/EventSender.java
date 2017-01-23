@@ -77,8 +77,6 @@ public class EventSender extends AsyncTask<ArrayList<Event>, Event, Void> {
             }
             br.close();
 
-            ULogger.d(connection.getResponseCode() + " " + baseUrl + " -> " + payload);
-
             if (connection.getResponseCode() > 299 || connection.getResponseCode() < 200) {
                 ULogger.e("Connection error: HTTP " + connection.getResponseCode());
                 ULogger.e("Response: " + responseText);

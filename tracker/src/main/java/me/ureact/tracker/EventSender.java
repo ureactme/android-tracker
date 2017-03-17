@@ -80,9 +80,10 @@ public class EventSender extends AsyncTask<ArrayList<Event>, Event, Void> {
             if (connection.getResponseCode() > 299 || connection.getResponseCode() < 200) {
                 ULogger.e("Connection error: HTTP " + connection.getResponseCode());
                 ULogger.e("Response: " + responseText);
+            } else {
+                ULogger.e("Sync successful: " + responseText);
+                tracker.syncSuccessful();
             }
-
-            tracker.syncSuccessful();
         } catch (IOException e) {
             e.printStackTrace();
             ULogger.e("Connection problem: " + e.getMessage());

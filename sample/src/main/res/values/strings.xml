@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Tracker</string>
-    <string name="ureactme_api_key">057e0cb9219085520cff44a46c6fd2102a956973</string>
-    <string name="ureactme_url">https://ureactme.walletsaver.com</string>
+    <string name="ureactme_api_key">02c38c4b-0cdd-456a-a6a3-7ff5f10a4ee9</string>
+    <string name="ureactme_url">http://10.213.26.141:8080</string>
 </resources>
